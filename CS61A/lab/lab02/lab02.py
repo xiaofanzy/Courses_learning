@@ -32,6 +32,7 @@ def composite_identity(f, g):
     False
     """
     "*** YOUR CODE HERE ***"
+    return lambda y : f(g(y)) == g(f(y))
 
 
 def count_cond(condition):
@@ -62,6 +63,17 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
+    def get_totals(x):
+        start,totals = 1,0
+        while start <= x:
+            if condition(x,start):
+                totals += 1
+            start += 1
+        return totals
+    return get_totals
+
+    
+        
 
 
 def multiple(a, b):
@@ -73,6 +85,15 @@ def multiple(a, b):
     42
     """
     "*** YOUR CODE HERE ***"
+    def maxtip(a,b):
+        while b:
+            a,b = b, a % b
+        return a
+
+    return a * b // maxtip(a,b)
+
+         
+
 
 
 def cycle(f1, f2, f3):
@@ -102,3 +123,26 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
+    """ def apply(x):
+        if x == 0:
+            return lambda y : y
+        elif x == 1:
+            return lambda y : f1(y)
+        elif x == 2:
+            return lambda y : f2(f1(y))
+        elif x == 3:
+            return lambda y : f3(f2(f1(y)))
+        else:
+            return lambda y : f1(apply(x -1)(y))
+    return apply """
+    """抄的网络，这是真不会啊"""
+    funcs = [f1, f2 ,f3]
+    def inner1(n):
+        def inner2(x):
+            if n == 0:
+                return x
+            else:
+                # funcs[(n-1) % 3] 是一个f1,f2,f3中的一个函数
+                return funcs[(n-1) % 3](inner1(n-1)(x))
+        return inner2
+    return inner1

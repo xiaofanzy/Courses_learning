@@ -24,7 +24,16 @@ def roll_dice(num_rolls, dice=six_sided):
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
     # END PROBLEM 1
-
+    total = 0
+    has_one = False
+    while num_rolls > 0:
+        score = dice()
+        if score == 1:
+            has_one = True
+        else:
+            total += score
+        num_rolls -= 1
+    return 1 if has_one else total
 
 def tail_points(opponent_score):
     """Return the points scored by rolling 0 dice according to Pig Tail.
@@ -34,6 +43,12 @@ def tail_points(opponent_score):
     """
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    one_num = opponent_score % 10
+    opponent_score //= 10
+    ten_num = opponent_score % 10
+    
+    return 2 * abs(ten_num - one_num) + 1
+
     # END PROBLEM 2
 
 
@@ -51,6 +66,7 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
+    return tail_points(opponent_score) if num_rolls == 0 else roll_dice(num_rolls,dice)
     # END PROBLEM 3
 
 
@@ -74,6 +90,23 @@ def square_update(num_rolls, player_score, opponent_score, dice=six_sided):
 
 # BEGIN PROBLEM 4
 "*** YOUR CODE HERE ***"
+def search(f,g):
+    x = 0
+    while g(x): 
+        if f(x):  
+            return x
+        x += 1
+    
+def square(x):
+    return x * x
+
+def perfect_square(sc):
+    return True if search(lambda x : square(x) == sc, lambda y: y <= sc) else False
+
+def next_perfect_square(sc):
+    score = search(lambda x : square(x) == sc,lambda y : y <= sc)
+    return (score + 1) * (score + 1)
+
 # END PROBLEM 4
 
 

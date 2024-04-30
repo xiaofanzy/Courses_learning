@@ -146,7 +146,13 @@ def play(strategy0, strategy1, update,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
-    
+    while score0 < goal and score1 < goal :
+        if 1 - who :
+            score0 = update(strategy0(score0,score1),score0,score1,dice)
+        else :
+            score1 = update(strategy1(score1,score0),score1,score0,dice)
+        who = 1 - who
+        
     # END PROBLEM 5
     return score0, score1
 
@@ -172,6 +178,8 @@ def always_roll(n):
     assert n >= 0 and n <= 10
     # BEGIN PROBLEM 6
     "*** YOUR CODE HERE ***"
+    """ 神经病，非要这么写。 """
+    return lambda x,y : n
     # END PROBLEM 6
 
 
@@ -202,6 +210,21 @@ def is_always_roll(strategy, goal=GOAL):
     """
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+    x ,y = 0, 0
+    while x < goal:
+        while y < goal:
+            score0 = strategy(x,y)
+            y += 1
+            score1 = strategy(x,y)
+            if score0 != score1:
+                return False
+        x += 1
+        y = 0
+
+    return True
+
+
+
     # END PROBLEM 7
 
 
@@ -218,6 +241,14 @@ def make_averaged(original_function, total_samples=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    
+    def sum_total(*args):
+        total,times = 0,total_samples
+        while times:
+            total += original_function(*args)
+            times -= 1
+        return total / total_samples
+    return sum_total
     # END PROBLEM 8
 
 
@@ -232,6 +263,14 @@ def max_scoring_num_rolls(dice=six_sided, total_samples=1000):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    ret,max_score = 0,0
+    for i in range(1,11):
+        average_dice = make_averaged(roll_dice,total_samples)
+        score = average_dice(i,dice);
+        if score > max_score:
+            ret,max_score = i,score
+
+    return ret
     # END PROBLEM 9
 
 
@@ -275,6 +314,10 @@ def tail_strategy(score, opponent_score, threshold=12, num_rolls=6):
     points, and returns NUM_ROLLS otherwise. Ignore score and Square Swine.
     """
     # BEGIN PROBLEM 10
+    roll_points = tail_points(opponent_score)
+    if roll_points >= threshold:
+        return 0
+
     return num_rolls  # Remove this line once implemented.
     # END PROBLEM 10
 
@@ -282,6 +325,9 @@ def tail_strategy(score, opponent_score, threshold=12, num_rolls=6):
 def square_strategy(score, opponent_score, threshold=12, num_rolls=6):
     """This strategy returns 0 dice when your score would increase by at least threshold."""
     # BEGIN PROBLEM 11
+    roll_ponits = square_update(0,score,opponent_score)  
+    if roll_ponits - score > threshold:
+        return 0
     return num_rolls  # Remove this line once implemented.
     # END PROBLEM 11
 
@@ -292,6 +338,7 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     # BEGIN PROBLEM 12
+    
     return 6  # Remove this line once implemented.
     # END PROBLEM 12
 

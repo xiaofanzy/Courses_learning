@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /* let hasDriverLiscense = false;
 const passTest = true;
@@ -93,7 +93,6 @@ const calcTip = bill => bill >=50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
 const tips = [calcTip(bills[0]),calcTip(bills[1]),calcTip(bills[2])]
 console.log((bills,tips)); */
 
-
 /* const jonasObject = {
   firstName : "Tom",
   lastName : "Jone",
@@ -113,7 +112,6 @@ console.log((bills,tips)); */
 
 // console.log(jonasObject.firstName);
 // console.log(jonasObject['firstName']);
-
 
 // const interestedIn = prompt("what do you want to konw about Jonas?");
 
@@ -178,12 +176,39 @@ for (let i = 0; i < years.length; i++){
 }
 console.log(ages); */
 
-const johnObject = {
-  fullname :"John",
-   height : 1.69,
-  weight : 78,
-   BMI : this.weight / this.height ** 2,
-  getInfos : function(){
-     return `the ${this.fullname} is ${this.height} height and ${this.weight} weight,and the BMI is ${this.BMI}.`
+/* const johnObject = {
+  fullname: "John",
+  height: 1.69,
+  weight: 78,
+  BMI: this.weight / this.height ** 2,
+  getInfos: function () {
+    return `the ${this.fullname} is ${this.height} height and ${this.weight} weight,and the BMI is ${this.BMI}.`;
+  },
+};
+
+for(let exercise = 1;exercise < 4;exercise++){
+  console.log(`----- starting exercise ${exercise} ------`);
+
+  for(let pop = 1; pop < 6; pop++){
+    console.log(`Lifting weight repetition ${pop}`);
   }
- }
+} */
+
+/* let dice = Math.trunc(Math.random() * 6) + 1;
+
+while(dice != 6){
+  console.log(`you rolled the rice is ${dice}`);
+  dice = Math.trunc(Math.random() * 6) + 1;
+} */
+
+const bills = [11, 22, 33, 44, 55, 66, 77, 88, 99, 100];
+const tips = [];
+const totals = [];
+
+for(let i = 0; i < bills.length; i++){
+  let tip = bills[i] * 0.1;
+  tips.push(tip);
+  totals.push(tip + bills[i]);
+}
+
+

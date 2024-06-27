@@ -92,10 +92,12 @@ def is_prime(n):
 def num_factors(n):
     """Return the number of factors of N, including 1 and N itself."""
     # BEGIN PROBLEM 4
-    fac_total = 1
-    while fac_total <= n :
-        if n % fac_total == 0:
-            
+    fac_total,start = 0, 1
+    while start <= n :
+        if n % start == 0:
+            fac_total += 1
+        start += 1
+    return fac_total
     "*** YOUR CODE HERE ***"
 
     # END PROBLEM 4
@@ -104,6 +106,13 @@ def sus_points(score):
     """Return the new score of a player taking into account the Sus Fuss rule."""
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    factors = num_factors(score)
+    if factors == 3 or factors == 4:
+        while not is_prime(score):
+            score += 1
+        return score
+    else:
+        return score
     # END PROBLEM 4
 
 def sus_update(num_rolls, player_score, opponent_score, dice=six_sided):
@@ -112,6 +121,8 @@ def sus_update(num_rolls, player_score, opponent_score, dice=six_sided):
     """
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    score = simple_update(num_rolls,player_score,opponent_score,dice)
+    return sus_points(score)
     # END PROBLEM 4
 
 
@@ -151,6 +162,14 @@ def play(strategy0, strategy1, update,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    while score0 < goal and score1 < goal: 
+        if 1 - who:
+            num_rolls = strategy0(score0,score1)
+            score0 = update(num_rolls,score0,score1,dice)
+        else:
+            num_rolls = strategy1(score1,score0)
+            score1 = update(num_rolls,score1,score0,dice)
+        who = 1 - who
     # END PROBLEM 5
     return score0, score1
 
@@ -176,6 +195,7 @@ def always_roll(n):
     assert n >= 0 and n <= 10
     # BEGIN PROBLEM 6
     "*** YOUR CODE HERE ***"
+    return lambda x, y : n
     # END PROBLEM 6
 
 
@@ -207,6 +227,14 @@ def is_always_roll(strategy, goal=GOAL):
     """
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+    start = strategy(0,0)
+    for m in range(0,goal):
+        for n in range(0,goal):
+            new = strategy(m,n)
+            if new != start:
+                return False
+        
+    return True
     # END PROBLEM 7
 
 

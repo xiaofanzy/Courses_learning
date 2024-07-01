@@ -15,6 +15,8 @@ def print_if(s, f):
     """
     for x in s:
         "*** YOUR CODE HERE ***"
+        if f(x):
+            print(x)
 
 
 def close(s, k):
@@ -33,6 +35,7 @@ def close(s, k):
     count = 0
     for i in range(len(s)):  # Use a range to loop over indices
         "*** YOUR CODE HERE ***"
+        count += (1 if abs(s[i] - i) <= k else 0)
     return count
 
 
@@ -47,7 +50,8 @@ def close_list(s, k):
     >>> close_list(t, 2)  # 2, 3, 4, and 5 are all within 2 of their index
     [2, 4, 3, 5]
     """
-    return [___ for i in range(len(s)) if ___]
+    # i is index not element
+    return [s[i] for i in range(len(s)) if abs(s[i] - i) <= k]
 
 
 from math import sqrt
@@ -63,7 +67,7 @@ def squares(s):
     >>> squares(seq)
     []
     """
-    return [___ for n in s if ___]
+    return [round(sqrt(n)) for n in s if sqrt(n) == round(sqrt(n))]
 
 
 def double_eights(n):
@@ -88,8 +92,20 @@ def double_eights(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n < 10:
+        return False
+    elif n % 100 == 88:
+        return True
+    return double_eights(n // 10)
 
 
+
+
+
+    
+    
+
+        
 def make_onion(f, g):
     """Return a function can_reach(x, y, limit) that returns
     whether some call expression containing only f, g, and x with
@@ -116,10 +132,10 @@ def make_onion(f, g):
     """
     def can_reach(x, y, limit):
         if limit < 0:
-            return ____
+            return False
         elif x == y:
-            return ____
+            return True
         else:
-            return can_reach(____, ____, limit - 1) or can_reach(____, ____, limit - 1)
+            return can_reach(f(x), y, limit - 1) or can_reach(g(x), y, limit - 1)
     return can_reach
 

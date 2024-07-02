@@ -98,13 +98,6 @@ def double_eights(n):
         return True
     return double_eights(n // 10)
 
-
-
-
-
-    
-    
-
         
 def make_onion(f, g):
     """Return a function can_reach(x, y, limit) that returns

@@ -31,9 +31,6 @@ def pick(paragraphs, select, k):
     """
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
-    pa_list = []
-    list = [i for i in paragraphs if select(i)]
-    return list[k] if len(list) > k else ''
     # END PROBLEM 1
 
 
@@ -53,14 +50,6 @@ def about(subject):
     assert all([lower(x) == x for x in subject]), 'subjects should be lowercase.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
-    def review(paragraph):
-        list = split(lower(remove_punctuation(paragraph)))
-        for i in list:
-            if i in subject:
-                return True
-        return False
-    return review
-
     # END PROBLEM 2
 
 
@@ -91,20 +80,7 @@ def accuracy(typed, source):
     source_words = split(source)
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
-    if len(source_words) == 0 and len(typed_words) == 0:
-        return 100.0
-    if len(source_words) == 0 or len(typed_words) == 0:
-        return 0.0
-    num = 0
-    ans = 0
-    for i in source_words:
-        if i == typed_words[num]:
-            ans += 1
-        num += 1
-        if num == len(typed_words) :
-            break
-    return round(ans / len(typed_words) * 100, 10)
-# END PROBLEM 3
+    # END PROBLEM 3
 
 
 def wpm(typed, elapsed):

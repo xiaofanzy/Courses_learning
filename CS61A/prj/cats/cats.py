@@ -31,6 +31,8 @@ def pick(paragraphs, select, k):
     """
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
+    pick_list = [i for i in paragraphs if select(i)]
+    return '' if k >= len(pick_list) else pick_list[k] 
     # END PROBLEM 1
 
 
@@ -50,6 +52,12 @@ def about(subject):
     assert all([lower(x) == x for x in subject]), 'subjects should be lowercase.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    def is_concat(strs):
+        for s in split(remove_punctuation(lower(strs))):
+            if s in subject:
+                return True
+        return False
+    return is_concat
     # END PROBLEM 2
 
 
@@ -80,6 +88,23 @@ def accuracy(typed, source):
     source_words = split(source)
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
+     # bose empty
+    if not typed and not source:
+        return 100.0
+    if not typed or not source:
+        return 0.0
+
+    c_size = min(len(typed_words),len(source_words)) 
+    r_num = 0
+
+    for s in range(c_size):
+        if typed_words[s] == source_words[s]:
+            r_num += 1
+    # 分母是第一个的长度，而不是最大值，因为是和第一个比较的。       
+    return r_num * 100 / len(typed_words)
+
+
+    
     # END PROBLEM 3
 
 
@@ -99,6 +124,7 @@ def wpm(typed, elapsed):
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
     # END PROBLEM 4
+    return len(typed)* 60 / (5 * elapsed) if len(typed) > 0 else 0.0
 
 
 ############
@@ -127,6 +153,21 @@ def autocorrect(typed_word, word_list, diff_function, limit):
     """
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    ans = float('inf')
+    lastans = ''
+    for i in word_list:
+        if i == typed_word:
+            return typed_word
+        temp = diff_function(typed_word, i, limit)
+        if temp > limit:
+            continue
+        if ans > temp:
+            ans = temp
+            lastans = i
+    if lastans == '':
+        return typed_word
+    else :
+        return lastans
     # END PROBLEM 5
 
 

@@ -192,9 +192,29 @@ def feline_fixes(typed, source, limit):
     5
     >>> feline_fixes("rose", "hello", big_limit)   # Substitute: r->h, o->e, s->l, e->l, length difference of 1.
     5
+    >>> feline_fixes("awe", "awesome", big_limit)
+    0
+    >>> feline_fixes("awful", "awesome", big_limit)
+    5
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    "*** YOUR CODE HERE ***"
+    def compared(f,s,ans):
+        if ans > limit:
+            return ans;
+        elif f == '':
+            return len(s) + ans;
+        elif s == '':
+            return len(f) + ans;
+        elif f[0] == s[0]:
+            return compared(f[1:],s[1:],ans)
+        else:
+            return compared(f[1:],s[1:],ans+1)
+    if typed[0] == source[0]:
+        return compared(typed[1:],source[1:],0)
+    else:
+        return compared(typed[1:],source[1:],1)
+    
     # END PROBLEM 6
 
 
